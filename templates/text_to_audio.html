@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block script %}
+<script>
+    var player;
+    window.onload = function () {
+        player = document.getElementById('player');
+    }
+    function playMusic() {
+        player.play();
+    }
+    function pauseMusic() {
+        Player.pause();
+    }
+    function stopMusic() {
+        Player.stop();
+    }  
+</script>
+{% endblock script %}
+
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    <div class="form-floating">
+        <h4>Select language</h4>
+        <select class="form-select" aria-label="Default select example" name="lang">
+            <option selected value="en">Open this select menu</option>
+            <option value="en">English</option>
+            <option value="hi">Hindi</option>
+            <option value="gn">Gujarati</option>
+        </select>
+
+        <h4>Write message to conver into audio</h4>
+        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
+            style="height: 100px" name="text"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-2">Save</button>
+</form>
+{% if music %}
+<audio controls="controls">
+    <source src="{% static 'speech.mp3' %}" type="audio/mp3">
+
+    <button onclick="playMusic()">Play</button>
+    <br />
+    <button onclick="pauseMusic()">Pause</button>
+    <br />
+    <button onclick="stopMusic()">Stop</button>
+    <br />
+    {% endif %}
+{% endblock content %}
